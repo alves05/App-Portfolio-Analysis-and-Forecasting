@@ -16,7 +16,7 @@ st.set_page_config(
     page_icon=":bar_chart",
     initial_sidebar_state="expanded"
 )
-st.sidebar.image("ACTIVE-MANAGEMENT15.png", use_column_width=True)
+st.sidebar.image("ACTIVE-MANAGEMENT16.png", use_column_width=True)
 st.sidebar.markdown('[Versão 1.0.0]')
 st.title('Análise de Portfólio de Ações e Previsões com Series Temporais')
 st.markdown('---')
