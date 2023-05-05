@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 from pandas.tseries.offsets import BDay
 import numpy as np
-# import datetime
 from datetime import datetime, date, timedelta
 import plotly.express as px
 from   pypfopt    import risk_models
