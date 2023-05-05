@@ -144,24 +144,6 @@ def forecast_data( data , n_forecast ):
         
     return previsao_acoes
 
-def indication_forecast( data , pesos ):
-    # Criando copia da base
-    dataset = data.copy()
-    
-    # Taxa de retorno diario
-    tx_retorno = dataset.pct_change().fillna(0)
-    
-    # Taxa de retorno anualizada
-    retorno_forecast = np.around((np.sum(tx_retorno.mean() * pesos) * 252) * 100, 2)
-    
-    # Calculo da volatilidade
-    vol_forecast = np.around((np.sqrt(np.dot(pesos, np.dot(tx_retorno.cov() * 252, pesos)))) * 100, 2)
-        
-    # Sharpe ratio
-    sharpe_forecast = np.round(retorno_forecast / vol_forecast,3)
-    
-    return retorno_forecast, vol_forecast, sharpe_forecast
-
 def data_filter_analysis( data ):
     # definindo max e min para o filtro de datas
     min_date = datetime.strptime(str(data['Date'].min().date()), '%Y-%m-%d')
