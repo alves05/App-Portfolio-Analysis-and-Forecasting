@@ -2,8 +2,8 @@ import streamlit as st
 import pandas as pd
 from pandas.tseries.offsets import BDay
 import numpy as np
-import datetime
-from datetime import datetime
+# import datetime
+from datetime import datetime, date, timedelta
 import plotly.express as px
 from   pypfopt    import risk_models
 from   pypfopt    import expected_returns
@@ -143,7 +143,7 @@ def forecast_data( data , date_inicial , n_forecast ):
     dias = n_forecast
     
     # Obter a data atual e adicionar a quantidade de dias
-    date_fim = datetime.date.today() + datetime.timedelta(days=dias)
+    date_fim = date.today() + timedelta(days=dias)
     
     # Gerar um intervalo de datas
     intervalo_dates = pd.date_range(start=date_inicio, end=date_fim)
