@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
+from pandas.tseries.offsets import BDay
 import numpy as np
+import datetime
 from datetime import datetime
 import plotly.express as px
 from   pypfopt    import risk_models
@@ -109,38 +111,55 @@ def income_simulation( data , pesos , capital ):
 
     return data_original, rendimento, roi
 
-def stock_price_forecast( data , tick , n_forecast ):
+def price_forecast( data , tick , n_forecast ) :
     # Criando copia da base de dados
     dataset = data.copy()
-
+    
     # Selecionando os dados da base
     dataset = dataset[['Date', tick]]
-
+    
     # Renomando colunas para o padrão do algoritimo
     dataset.columns = ['ds', 'y']
-
-    # Criando base de teste
-    base_teste = dataset[len(dataset) - n_forecast:]
-
+    
     # Criando, treinando e fazendo as previsões
-    model = Prophet()
+    model = Prophet(growth='linear',
+                changepoints=None,
+                changepoint_prior_scale=0.05,
+                seasonality_mode='additive',
+                seasonality_prior_scale=10.0,
+                interval_width=0.8)
     model.fit(dataset)
     future = model.make_future_dataframe(periods=n_forecast)
     forecast = model.predict(future)
-
+    
     # Criando base de previsões
-    data_forecast = forecast[['ds', 'yhat']].tail(n_forecast)
-    data_forecast.columns = ['Date', tick]
+    forecast_test = forecast['yhat'].tail(n_forecast)
+    
+    return forecast_test
 
-    return data_forecast
+def forecast_data( data , date_inicial , n_forecast ):
+    # Definir a data de início e fim
+    date_inicio = date_inicial
+    dias = n_forecast
+    
+    # Obter a data atual e adicionar a quantidade de dias
+    date_fim = datetime.date.today() + datetime.timedelta(days=dias)
+    
+    # Gerar um intervalo de datas
+    intervalo_dates = pd.date_range(start=date_inicio, end=date_fim)
 
-def forecast_data( data , n_forecast ):
+    # Filtrar apenas as datas úteis
+    dates_uteis = pd.bdate_range(start=date_inicio, end=date_fim, freq=BDay())
+
+    # Criar um DataFrame com as datas úteis
+    dates = pd.DataFrame({'data': dates_uteis})   
+    
     # Base de previsões e consolidada
     previsao_acoes = pd.DataFrame(columns=['Date'] + list(data.columns[1:]))
     for i in data.columns[1:]:
-        d = stock_price_forecast(data, i, n_forecast)
-        previsao_acoes['Date'] = d.iloc[:,0]
-        previsao_acoes[i] = d.iloc[:,1]
+        d = price_forecast(data, i, len(dates))
+        previsao_acoes['Date'] = dates['data']
+        previsao_acoes[i] = d.values
         
     return previsao_acoes
 
@@ -361,7 +380,7 @@ if __name__ == "__main__":
 
     simulacao, rendimento, roi = income_simulation(filtered_data, melhor_solucao, capital)
  
-    dataset_previsao = forecast_data( df , 365)
+    dataset_previsao = forecast_data(df, '2023-03-31', 330)
     
     filtered_data_prev = data_filter_forecast(dataset_previsao)
 
