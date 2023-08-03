@@ -1,7 +1,7 @@
 # App para Análise de Portfólio e Previsão de Retorno de Investimento
 
-### Sobre o problema de negócio
-Esta aplicação foi desenvolvida para atender as necessidades de uma empresa de gerenciamento de investimentos que queria disponibilizar uma plataforma onde os clientes pudessem fazer simulações de quanto iriam ter de lucro investindo nas ações do portfólio indicado pela empresa.
+### Sobre o app
+A aplicação foi desenvolvida para atender a necessidade de uma empresa que gerencia carteiras de investimentos em ações. O objetivo é disponibilizar uma plataforma onde os clientes da empresa possam realizar análises de investimento, de acordo com a disponibilidade de capital de cada indivíduo, no portfólio de ações indicado pela empresa, e também realizar simulações de retorno financeiro sobre as ações do portfólio.
 
 ### Código da aplicação
 [data_app.py](https://github.com/alves05/App-Portfolio-Analysis-and-Forecasting/blob/master/data_app.py)
