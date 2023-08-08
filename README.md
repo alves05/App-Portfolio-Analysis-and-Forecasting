@@ -7,7 +7,7 @@ A aplicação foi desenvolvida para atender a necessidade de uma empresa que ger
 [data_app.py](https://github.com/alves05/App-Portfolio-Analysis-and-Forecasting/blob/master/data_app.py)
 
 ### Link do web app
-[Active Management](https://app-portfolio-analysis-and-forecasting-aso11ac0pu7.streamlit.app)
+[![Active Management](https://img.shields.io/badge/Active--Management-v1.0-fff?style=for-the-badge&labelColor=blue)](https://app-portfolio-analysis-and-forecasting-aso11ac0pu7.streamlit.app)
 
 ### Links da análise completa do portfólio
 Site portfólio de projetos:
