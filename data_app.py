@@ -166,7 +166,7 @@ def data_filter_analysis( data ):
     # definindo max e min para o filtro de datas
     min_date = datetime.strptime(str(data['Date'].min().date()), '%Y-%m-%d')
     max_date = datetime.strptime(str(data['Date'].max().date()), '%Y-%m-%d')
-    # slider de datas
+    # slider de datas.
     st.sidebar.header('Filtros Análise')
     st.markdown('#')
     slider_value = st.sidebar.slider(
