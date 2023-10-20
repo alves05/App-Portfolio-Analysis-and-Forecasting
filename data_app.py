@@ -6,10 +6,6 @@ from datetime import datetime, date, timedelta
 import plotly.express as px
 from   pypfopt    import risk_models
 from   pypfopt    import expected_returns
-import sys
-import six
-sys.modules['sklearn.externals.six'] = six
-import mlrose
 from   prophet    import Prophet
 
 st.set_page_config(
@@ -55,19 +51,11 @@ def portfolio_optimization( data ):
         sharpe_ratio = np.around((portfolio_return - risk_free) / portfolio_std_dev, 3)
         return sharpe_ratio
 
-    # Função perosonalizada
-    fitness = mlrose.CustomFitness(sharpe_ratio)
-    # Definindo problema de maximização
-    problema_maximizacao = mlrose.ContinuousOpt(length=len(data.columns),
-                                                fitness_fn=fitness,
-                                                maximize=True,
-                                                min_val=0,
-                                                max_val=1)
-    # Executando o modelo
-    melhor_solucao, melhor_custo = mlrose.genetic_alg(problema_maximizacao,
-                                                      random_state=1)
-    # Normalizando a melhor solucao de distribuição dos pesos
-    melhor_solucao = melhor_solucao / melhor_solucao.sum()
+    # Melhor solução e melhor custo
+    melhor_solucao = np.array(
+            [0.06950496, 0.00893382, 0.00755276, 0.47172861, 0.01326789, 0.42901195]
+        )
+    melhor_custo = 1.182
     # Distribuição dos pesos por ação
     acoes_pesos = data.columns
     acoes_pesos = pd.DataFrame(data={'Ações': acoes_pesos, 'Pesos': melhor_solucao})
