@@ -31,26 +31,6 @@ def data_index( data ):
     return data
 
 def portfolio_optimization( data ):
-    # Função fitness
-    def sharpe_ratio(solucao):
-        # Criando copia da base
-        dataset = data.copy()
-        # Normalizando os pesos
-        pesos = solucao / solucao.sum()
-        # Calculo do retorno medio
-        returns = dataset.pct_change().mean() * 252
-        # Calculo do retorno do portfolio
-        portfolio_return = np.dot(returns, pesos)
-        # Matriz de covariancia do portfolio
-        cov_matrix = dataset.pct_change().cov()
-        # Risco do portfolio
-        portfolio_std_dev = np.sqrt(np.dot(pesos.T, np.dot(cov_matrix * 252, pesos)))
-        # Taxa selic do período
-        risk_free = np.array([6.43, 5.77, 2.55, 5.02, 12.83]).mean() / 100
-        # Calculo do indice sharpe
-        sharpe_ratio = np.around((portfolio_return - risk_free) / portfolio_std_dev, 3)
-        return sharpe_ratio
-
     # Melhor solução e melhor custo
     melhor_solucao = np.array(
             [0.06950496, 0.00893382, 0.00755276, 0.47172861, 0.01326789, 0.42901195]
